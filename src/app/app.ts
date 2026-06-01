@@ -1,12 +1,25 @@
+/*
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { UserListComponent } from './components/user-list/user-list';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, UserListComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
   protected readonly title = signal('tracking-web');
 }
+*/
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet],
+  template: `<router-outlet></router-outlet>`
+})
+export class App {}

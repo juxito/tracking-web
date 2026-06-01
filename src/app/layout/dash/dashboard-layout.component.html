@@ -1,0 +1,21 @@
+<app-sidebar
+  [collapsed]="sidebarCollapsed"
+  (toggle)="toggleSidebar()"
+></app-sidebar>
+
+<app-topbar
+  [collapsed]="sidebarCollapsed"
+></app-topbar>
+
+<main
+  class="pt-16 pb-16 transition-all duration-300"
+  [ngClass]="sidebarCollapsed ? 'pl-16' : 'pl-64'"
+>
+  <div class="p-6">
+    <router-outlet></router-outlet>
+  </div>
+</main>
+
+<app-footbar
+  [collapsed]="sidebarCollapsed"
+></app-footbar>
