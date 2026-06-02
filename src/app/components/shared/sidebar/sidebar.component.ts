@@ -17,13 +17,14 @@ export class SidebarComponent {
 
   navItems = [
     { route: '', label: 'Dashboard', icon: 'dashboard' },
+    { route: 'devices', label: 'Devices', icon: 'devices' },
     { route: 'assets', label: 'Assets', icon: 'inventory_2' },
-    { route: 'map', label: 'Mapa', icon: 'map' },
     { route: 'users', label: 'Usuarios', icon: 'group' },
+    { route: 'map', label: 'Mapa', icon: 'map' },
     { route: 'settings', label: 'Ajustes', icon: 'settings' }
   ];
 
-  constructor(private router: Router) {}
+  constructor(public router: Router) {}
 
   navigate(route: string) {
     this.router.navigate([route]);

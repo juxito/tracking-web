@@ -1,34 +1,57 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
-/*@import 'tw-animate-css';*/
+@import 'tw-animate-css';
 
-/* Variables base */
+/* ===================== */
+/* LIGHT */
+/* ===================== */
 :root {
-  --background: oklch(0.98 0.005 250);
-  --foreground: oklch(0.2 0.02 250);
+  --background: #f8fafc;
+  --card: #ffffff;
+  --sidebar: #ffffff;
+  --border: #e5e7eb;
 
-  --primary: oklch(0.55 0.2 250);
-  --primary-foreground: oklch(1 0 0);
+  --text: #111827;
+  --text-muted: #6b7280;
 
-  --border: oklch(0.88 0.01 250);
-
-  --sidebar: oklch(0.15 0.02 250);
-  --sidebar-foreground: oklch(0.9 0.01 250);
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
 }
 
-/* Dark mode */
+/* ===================== */
+/* DARK */
+/* ===================== */
 .dark {
-  --background: oklch(0.12 0.02 250);
-  --foreground: oklch(0.95 0.01 250);
+  --background: #020617;
+  --card: #0b1220;
+  --sidebar: #0f172a;
+  --border: #1f2937;
+  --sidebar-border: #e5e7eb;
 
-  --primary: oklch(0.6 0.18 250);
+  --text: #e5e7eb;
+  --text-muted: #9ca3af;
+
+  --sidebar-accent: #1f2937;
+
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
 }
 
-/* Base styles */
+/* ===================== */
+/* BASE */
+/* ===================== */
 body {
-  margin: 0;
   background: var(--background);
-  color: var(--foreground);
-  font-family: sans-serif;
+  color: var(--text);
+  font-family: Inter, sans-serif;
+}
+
+/* SCROLL */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: #1f2937;
+  border-radius: 10px;
 }

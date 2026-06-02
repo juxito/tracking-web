@@ -1,23 +1,25 @@
 <aside
-  class="fixed left-0 top-0 z-40 h-screen bg-[var(--sidebar)] text-[var(--sidebar-foreground)] border-r border-[var(--sidebar-border)] transition-all duration-300"
-  [ngClass]="collapsed && !hovering ? 'w-16' : 'w-64'"
+  class="fixed left-0 top-0 z-40 h-screen transition-all duration-300"
+  [ngClass]="collapsed && !hovering ? 'w-22' : 'w-54'"
+  [style.background]=" 'var(--sidebar)' "
+  [style.borderRight]="'1px solid var(--border)'"
   (mouseenter)="collapsed && (hovering = true)"
   (mouseleave)="hovering = false"
 >
   <!-- Header -->
-  <div class="flex items-center justify-between h-16 px-4 border-b border-[var(--sidebar-border)]">
+  <div class="flex items-center justify-between h-16 px-4 border-b border-(--sidebar-border)">
     
     <div
       class="flex items-center gap-2 overflow-hidden transition-all duration-300"
       [ngClass]="isExpanded ? 'opacity-100' : 'opacity-0 w-0'"
     >
-      <div class="w-8 h-8 rounded-xl bg-[var(--primary)] flex items-center justify-center">
+      <div class="w-8 h-8 rounded-xl bg-(--primary) flex items-center justify-center">
         <mat-icon class="text-white text-sm">inventory_2</mat-icon>
       </div>
-      <span class="font-semibold whitespace-nowrap">GeoAssets</span>
+      <span class="font-semibold whitespace-nowrap">Assets</span>
     </div>
 
-    <button (click)="toggle.emit()" class="p-1.5 rounded hover:bg-[var(--sidebar-accent)]">
+    <button (click)="toggle.emit()" class="p-1.5 rounded hover:bg-(--sidebar-accent)">
       <mat-icon>{{ collapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
     </button>
   </div>
@@ -27,12 +29,18 @@
     <button
       *ngFor="let item of navItems"
       (click)="navigate(item.route)"
-      class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all hover:bg-[var(--sidebar-accent)]"
+      class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all"
+      [ngClass]="
+        router.url === item.route
+          ? 'bg-(--primary) text-white'
+          : 'hover:bg-(--text-muted)'
+      "
     >
       <mat-icon class="text-base">{{ item.icon }}</mat-icon>
 
       <span
         class="text-sm font-medium whitespace-nowrap transition-all duration-300"
+        [style.color]="'var(--text)'"
         [ngClass]="isExpanded ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'"
       >
         {{ item.label }}
@@ -42,7 +50,7 @@
 
   <!-- Footer -->
   <div *ngIf="isExpanded" class="absolute bottom-4 left-4 right-4">
-    <div class="p-3 bg-[var(--sidebar-accent)] rounded-xl text-xs opacity-70">
+    <div class="p-3 bg-(--sidebar-accent) rounded-xl text-xs opacity-70">
       Version 1.0.0
     </div>
   </div>

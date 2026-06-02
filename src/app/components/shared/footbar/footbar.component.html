@@ -1,15 +1,19 @@
 <footer
-  class="fixed bottom-0 right-0 z-20 h-12 bg-[var(--card)] border-t border-[var(--border)] transition-all duration-300"
-  [ngClass]="collapsed ? 'left-16' : 'left-64'"
+  class="fixed bottom-0 right-0 z-20 h-12 transition-all duration-300"
+  [ngClass]="collapsed ? 'left-22' : 'left-54'"
+  [style.background]="'var(--card)'"
+  [style.borderTop]="'1px solid var(--border)'"
 >
   <div class="flex items-center justify-between h-full px-6 text-xs">
 
-    <span>© 2026 GeoAssets Admin</span>
+    <span [style.color]="'var(--text-muted)'">
+      © 2026 Jux Admin
+    </span>
 
     <div class="flex gap-4">
-      <a href="#">Privacy</a>
-      <a href="#">Terms</a>
-      <a href="#">Support</a>
+      <a [style.color]="'var(--text-muted)'">Privacy</a>
+      <a [style.color]="'var(--text-muted)'">Terms</a>
+      <a [style.color]="'var(--text-muted)'">Support</a>
     </div>
 
   </div>

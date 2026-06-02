@@ -1,10 +1,14 @@
 <header
-  class="fixed top-0 right-0 z-30 h-16 bg-[var(--card)] border-b border-[var(--border)] transition-all duration-300"
-  [ngClass]="collapsed ? 'left-16' : 'left-64'"
+  class="fixed top-0 right-0 z-30 h-16 transition-all duration-300"
+  [ngClass]="collapsed ? 'left-22' : 'left-54'"
+  [style.background]="'var(--card)'"
+  [style.borderBottom]="'1px solid var(--border)'"
 >
   <div class="flex items-center justify-between h-full px-6">
 
-    <h1 class="text-lg font-semibold">Panel de Administración</h1>
+    <h1 class="text-lg font-semibold" [style.color]="'var(--text)'">
+      Panel de Administración
+    </h1>
 
     <div class="flex items-center gap-3">
 
@@ -12,7 +16,8 @@
       <div class="relative">
         <button
           (click)="showNotifications = !showNotifications; showUserMenu = false"
-          class="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
+          class="p-2 rounded-xl transition-colors"
+          style="color: var(--text-muted)"
         >
           <mat-icon>notifications</mat-icon>
         </button>
@@ -28,8 +33,18 @@
       </div>
 
       <!-- Settings -->
-      <button class="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
+      <button 
+        class="p-2 rounded-xl transition-colors"
+        style="color: var(--text-muted)"
+      >
         <mat-icon>settings</mat-icon>
+      </button>
+
+      <button (click)="theme.toggleTheme()"
+        class="p-2 rounded-xl transition-colors"
+        style="color: var(--text-muted)"
+      >
+        <mat-icon>dark_mode</mat-icon>
       </button>
 
       <!-- User -->
@@ -45,8 +60,12 @@
           <mat-icon>expand_more</mat-icon>
         </button>
 
-        <div *ngIf="showUserMenu"
-             class="absolute right-0 top-12 w-56 bg-white dark:bg-gray-800 border rounded-xl shadow-lg">
+        <div
+          *ngIf="showUserMenu"
+          class="absolute right-0 top-12 w-56 rounded-2xl shadow-xl"
+          [style.background]="'var(--card)'"
+          [style.border]="'1px solid var(--border)'"
+        >
 
           <button class="w-full flex items-center gap-2 p-3 hover:bg-gray-100 dark:hover:bg-gray-700">
             <mat-icon>person</mat-icon> My Account
