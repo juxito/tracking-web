@@ -1,0 +1,18 @@
+<div *ngIf="open"
+     class="fixed top-0 right-0 w-100 h-full shadow-xl p-6"
+     style="background: var(--card)">
+
+  <h2>{{ user ? 'Editar Usuario' : 'Nuevo Usuario' }}</h2>
+
+  <input [(ngModel)]="model.name" placeholder="Nombre" />
+  <input [(ngModel)]="model.email" placeholder="Email" />
+
+  <select [(ngModel)]="model.role">
+    <option>Admin</option>
+    <option>Operador</option>
+  </select>
+
+  <button (click)="save()">Guardar</button>
+  <button (click)="close.emit()">Cancelar</button>
+
+</div>

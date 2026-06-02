@@ -1,39 +1,45 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { UsersStore, User } from './services/users.store';
 import { CommonModule } from '@angular/common';
-import { MatTableModule } from '@angular/material/table';
-
-import { UserService } from '../../services/user';
+import { UserSidenavComponent } from "./components/user-sidenav/user-sidenav.component";
 
 @Component({
-  selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, MatTableModule],
+  imports: [CommonModule, UserSidenavComponent],
   templateUrl: './users.component.html'
 })
-// export class UsersComponent implements OnInit {
-export class UsersComponent {
-  @Input() collapsed = false;
+export class UsersComponent implements OnInit {
 
-  // Aquí guardaremos la lista que viene de Spring Boot
-  // users: any[] = [];
-  users: any[] = [
-    { id: 1, name: 'John Doe', email: 'john.doe@example.com', role: 'Admin' },
-    { id: 2, name: 'Jane Smith', email: 'jane.smith@example.com', role: 'User' },
-    { id: 3, name: 'Bob Johnson', email: 'bob.johnson@example.com', role: 'User' }
-  ];
+  users$!: any;
+  
+  viewMode: 'cards' | 'table' = 'cards';
+  
+  sidenavOpen = false;
+  selectedUser: User | null = null;
+  
+  constructor(private store: UsersStore) {
+    this.users$ = this.store.users$;
+  }
+  
+  ngOnInit() {
+    this.store.loadUsers();
+  }
 
-  // Definimos el orden y cuáles columnas queremos renderizar en la vista
-  displayedColumns: string[] = ['id', 'name', 'email', 'role'];
+  toggleView(mode: 'cards' | 'table') {
+    this.viewMode = mode;
+  }
 
-  constructor(private userService: UserService) {}
+  openCreate() {
+    this.selectedUser = null;
+    this.sidenavOpen = true;
+  }
 
-  // ngOnInit(): void {
-  //   // Aquí llamas a tu servicio para llenar la variable 'users'
-  //   this.userService.getUsers().subscribe({
-  //     next: (data) => {
-  //       this.users = data;
-  //     },
-  //     error: (err) => console.error('Error al traer usuarios:', err)
-  //   });
-  // }
+  openEdit(user: User) {
+    this.selectedUser = user;
+    this.sidenavOpen = true;
+  }
+
+  closeSidenav() {
+    this.sidenavOpen = false;
+  }
 }

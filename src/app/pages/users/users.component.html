@@ -1,32 +1,51 @@
 <h1 class="text-2xl font-bold mb-4">USERS</h1>
 
-<div class="table-container">
-  <h2>Listado de Usuarios Registrados</h2>
+<div class="p-6">
 
-  <table mat-table [dataSource]="users" class="mat-elevation-z8">
+  <!-- HEADER -->
+  <div class="flex justify-between items-center mb-6">
+    <input placeholder="Buscar usuarios..."
+           class="input" />
 
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let user"> {{ user.id }} </td>
-    </ng-container>
+    <div class="flex gap-2">
+      <button (click)="toggleView('cards')">Tarjetas</button>
+      <button (click)="toggleView('table')">Tabla</button>
 
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Nombre </th>
-      <td mat-cell *matCellDef="let user"> {{ user.name }} </td>
-    </ng-container>
+      <button (click)="openCreate()">+ Añadir Usuario</button>
+    </div>
+  </div>
 
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef> Correo Electrónico </th>
-      <td mat-cell *matCellDef="let user"> {{ user.email }} </td>
-    </ng-container>
+  <!-- CARDS -->
+  <div *ngIf="viewMode === 'cards'"
+       class="grid grid-cols-3 gap-4">
 
-    <ng-container matColumnDef="role">
-      <th mat-header-cell *matHeaderCellDef> Rol </th>
-      <td mat-cell *matCellDef="let user"> {{ user.role }} </td>
-    </ng-container>
+    <div *ngFor="let user of users$ | async"
+         class="card"
+         (click)="openEdit(user)">
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <h3>{{ user.name }}</h3>
+      <p>{{ user.email }}</p>
+      <span>{{ user.role }}</span>
 
+    </div>
+
+  </div>
+
+  <!-- TABLE -->
+  <table *ngIf="viewMode === 'table'">
+    <tr *ngFor="let user of users$ | async"
+        (click)="openEdit(user)">
+      <td>{{ user.name }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.role }}</td>
+    </tr>
   </table>
+
+  <!-- SIDENAV -->
+  <app-user-sidenav
+    [open]="sidenavOpen"
+    [user]="selectedUser"
+    (close)="closeSidenav()">
+  </app-user-sidenav>
+
 </div>

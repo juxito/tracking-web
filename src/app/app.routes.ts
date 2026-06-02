@@ -1,45 +1,55 @@
 import { Routes } from '@angular/router';
 import { DashboardLayoutComponent } from './layout/dash/dashboard-layout.component';
 
-// Pages
-import { UserListComponent } from './components/user-list/user-list';
+import { authGuard } from './core/guards/auth.guard';
 
-// (puedes crear después estos)
-import { HomeComponent } from './pages/home/home.component';
+// Pages
+// import { HomeComponent } from './pages/home/home.component';
 import { DevicesComponent } from './pages/devices/devices.component';
 import { AssetsComponent } from './pages/assets/assets.component';
 import { UsersComponent } from './pages/users/users.component';
+// import { UsersComponent } from './pages/users/users.component';
 
 export const routes: Routes = [
+  // {
+  //   path: 'login',
+  //   loadComponent: () => import('./pages/login/login.component').then((m) => m.LoginComponent),
+  // },
   {
     path: '',
     component: DashboardLayoutComponent,
+    // canActivate: [authGuard],
     children: [
       {
         path: '',
         redirectTo: 'home',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'home',
-        component: HomeComponent
+        loadComponent: () => import('./pages/home/home.component').then((m) => m.HomeComponent),
       },
       {
         path: 'devices',
-        component: DevicesComponent
+        component: DevicesComponent,
       },
       {
         path: 'assets',
-        component: AssetsComponent
+        component: AssetsComponent,
       },
+      // {
+      //   path: 'users',
+      //   loadComponent: () => import('./pages/users/users.component').then((m) => m.UsersComponent),
+      //   data: { roles: ['admin'] }, // 🔥 SOLO ADMIN
+      // },
       {
         path: 'users',
         component: UsersComponent
       },
       {
         path: '**',
-        redirectTo: 'home'
-      }
-    ]
-  }
+        redirectTo: 'home',
+      },
+    ],
+  },
 ];

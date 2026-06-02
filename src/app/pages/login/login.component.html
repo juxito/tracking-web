@@ -1,0 +1,25 @@
+<div class="h-screen flex items-center justify-center bg-(--background)">
+
+  <div class="p-8 rounded-2xl border w-80"
+       style="background: var(--card); border-color: var(--border)">
+
+    <h2 class="text-xl mb-4">Login</h2>
+
+    <input [(ngModel)]="username"
+           placeholder="Usuario"
+           class="w-full mb-3 p-2 rounded border" />
+
+    <input [(ngModel)]="password"
+           type="password"
+           placeholder="Password"
+           class="w-full mb-4 p-2 rounded border" />
+
+    <button (click)="login()"
+            class="w-full p-2 rounded text-white"
+            [style.background]="'var(--primary)'">
+      Entrar
+    </button>
+
+  </div>
+
+</div>
