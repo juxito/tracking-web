@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { User } from '../models/user.model';
 
 // Interfaz para definir la estructura del objeto (tipado estricto)
-export interface User {
-  id?: number;
-  name: string;
-  email: string;
-  role: string;
-}
+// export interface User {
+//   id?: number;
+//   name: string;
+//   email: string;
+//   role: string;
+// }
 
 @Injectable({
   providedIn: 'root'
@@ -33,3 +34,7 @@ export class UserService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
+
+export type {
+  User // URL del Backend
+};

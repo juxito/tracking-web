@@ -1,18 +1,21 @@
-<div *ngIf="open"
-     class="fixed top-0 right-0 w-100 h-full shadow-xl p-6"
-     style="background: var(--card)">
+<div class="p-6 space-y-6">
+  <h2 class="text-lg font-semibold">
+    {{ user ? 'Editar Usuario' : 'Nuevo Usuario' }}
+  </h2>
 
-  <h2>{{ user ? 'Editar Usuario' : 'Nuevo Usuario' }}</h2>
+  <!-- INPUTS -->
+  <div class="space-y-4">
+    <input class="input w-full" [(ngModel)]="model.name" placeholder="Nombre completo" />
 
-  <input [(ngModel)]="model.name" placeholder="Nombre" />
-  <input [(ngModel)]="model.email" placeholder="Email" />
+    <input class="input w-full" [(ngModel)]="model.email" placeholder="Email" />
 
-  <select [(ngModel)]="model.role">
-    <option>Admin</option>
-    <option>Operador</option>
-  </select>
+    <input class="input w-full" [(ngModel)]="model.role" placeholder="Rol" />
+  </div>
 
-  <button (click)="save()">Guardar</button>
-  <button (click)="close.emit()">Cancelar</button>
+  <!-- ACTION -->
+  <div class="flex justify-end gap-2">
+    <button (click)="close.emit()">Cancelar</button>
 
+    <button class="btn-primary" (click)="save()">Guardar Cambios</button>
+  </div>
 </div>

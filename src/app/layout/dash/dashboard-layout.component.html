@@ -1,21 +1,45 @@
-<app-sidebar
-  [collapsed]="sidebarCollapsed"
-  (toggle)="toggleSidebar()"
-></app-sidebar>
+<mat-sidenav-container class="layout-container h-full">
 
-<app-topbar
-  [collapsed]="sidebarCollapsed"
-></app-topbar>
+  <!-- SIDENAV DERECHO GLOBAL -->
+  <mat-sidenav
+    position="end"
+    mode="over"
+    [opened]="ui.sidenavOpen()"
+    (closed)="ui.close()"
+    class="w-200"
+    style="background: var(--card); border-left: 1px solid var(--border); top: 63px;"
+  >
+    <app-user-sidenav
+      [user]="ui.selectedUser()"
+      (close)="ui.close()"
+    />
+  </mat-sidenav>
 
-<main
-  class="pt-16 pb-16 transition-all duration-300"
-  [ngClass]="sidebarCollapsed ? 'pl-22' : 'pl-54'"
->
-  <div class="p-6">
-    <router-outlet></router-outlet>
-  </div>
-</main>
+  <!-- CONTENIDO PRINCIPAL -->
+  <mat-sidenav-content class="bg-(--background) text-amber-50">
 
-<app-footbar
-  [collapsed]="sidebarCollapsed"
-></app-footbar>
+    <app-sidebar
+      [collapsed]="sidebarCollapsed"
+      (toggle)="toggleSidebar()"
+    ></app-sidebar>
+
+    <app-topbar
+      [collapsed]="sidebarCollapsed"
+    ></app-topbar>
+
+    <main
+      class="pt-16 pb-16 transition-all duration-300"
+      [ngClass]="sidebarCollapsed ? 'pl-22' : 'pl-54'"
+    >
+      <div class="p-6">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+
+    <app-footbar
+      [collapsed]="sidebarCollapsed"
+    ></app-footbar>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

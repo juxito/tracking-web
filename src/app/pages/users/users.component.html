@@ -1,51 +1,97 @@
 <h1 class="text-2xl font-bold mb-4">USERS</h1>
 
 <div class="p-6">
-
   <!-- HEADER -->
   <div class="flex justify-between items-center mb-6">
-    <input placeholder="Buscar usuarios..."
-           class="input" />
+    <!-- LEFT -->
+    <div class="flex items-center gap-4">
+      <input class="input" placeholder="Buscar usuarios..." />
+    </div>
 
-    <div class="flex gap-2">
-      <button (click)="toggleView('cards')">Tarjetas</button>
-      <button (click)="toggleView('table')">Tabla</button>
+    <!-- RIGHT -->
+    <div class="flex items-center gap-3">
+      <!-- TOGGLE -->
+      <div class="toggle">
+        <button [class.active]="viewMode === 'cards'" (click)="toggleView('cards')">
+          Tarjetas
+        </button>
 
-      <button (click)="openCreate()">+ Añadir Usuario</button>
+        <button [class.active]="viewMode === 'table'" (click)="toggleView('table')">Tabla</button>
+      </div>
+
+      <!-- ACTION -->
+      <button class="btn-primary" (click)="openCreate()">+ Añadir Usuario</button>
     </div>
   </div>
 
   <!-- CARDS -->
-  <div *ngIf="viewMode === 'cards'"
-       class="grid grid-cols-3 gap-4">
+  @if (viewMode === 'cards') {
+    <div class="grid grid-cols-3 gap-6">
+      @for (user of (users$ | async) ?? []; track user.id) {
+        <div class="card cursor-pointer" (click)="openEdit(user)">
+          <!-- HEADER -->
+          <div class="flex items-center gap-3 mb-4">
+            <!-- AVATAR -->
+            <div
+              class="w-10 h-10 rounded-full flex items-center justify-center"
+              style="background: var(--primary); color: white"
+            >
+              {{ user.name[0] }}
+            </div>
 
-    <div *ngFor="let user of users$ | async"
-         class="card"
-         (click)="openEdit(user)">
+            <div>
+              <h3 class="font-semibold">{{ user.name }}</h3>
+              <span class="text-xs px-2 py-1 rounded-full" style="background: var(--muted)">
+                {{ user.role }}
+              </span>
+            </div>
+          </div>
 
-      <h3>{{ user.name }}</h3>
-      <p>{{ user.email }}</p>
-      <span>{{ user.role }}</span>
+          <!-- INFO -->
+          <div class="text-sm text-(--muted-foreground) space-y-1">
+            <p>{{ user.email }}</p>
+            <p>Último acceso: --</p>
+          </div>
 
+          <!-- FOOTER -->
+          <div class="flex justify-between items-center mt-4">
+            <span class="text-xs" [style.color]="user.status === 'activo' ? '#00c853' : '#aaa'">
+              ● {{ user.status }}
+            </span>
+
+            <!-- <div class="flex gap-2 opacity-70">✏️ 🗑️</div> -->
+          </div>
+        </div>
+      }
     </div>
-
-  </div>
+  }
 
   <!-- TABLE -->
-  <table *ngIf="viewMode === 'table'">
-    <tr *ngFor="let user of users$ | async"
-        (click)="openEdit(user)">
-      <td>{{ user.name }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.role }}</td>
-    </tr>
-  </table>
+  @if (viewMode === 'table') {
+    <div class="card">
+      <table class="w-full text-sm">
+        <thead class="text-left text-(--muted-foreground)">
+          <tr>
+            <th class="p-3">Nombre</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th>Status</th>
+          </tr>
+        </thead>
 
-  <!-- SIDENAV -->
-  <app-user-sidenav
-    [open]="sidenavOpen"
-    [user]="selectedUser"
-    (close)="closeSidenav()">
-  </app-user-sidenav>
+        <tbody>
+          @for (user of users$ | async; track user.id) {
+            <tr class="border-t border-(--border) cursor-pointer" (click)="openEdit(user)">
+              <td class="p-3">{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.role }}</td>
+              <td>{{ user.status }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
 
 </div>

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { User } from '../../../models/user.model';
 
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-  role: string;
-  status: 'activo' | 'inactivo';
-}
+// export interface User {
+//   id: number;
+//   name: string;
+//   email: string;
+//   role: string;
+//   status: 'activo' | 'inactivo';
+// }
 
 @Injectable({ providedIn: 'root' })
 export class UsersStore {
