@@ -6,13 +6,14 @@
     mode="over"
     [opened]="ui.sidenavOpen()"
     (closed)="ui.close()"
-    class="w-200"
-    style="background: var(--card); border-left: 1px solid var(--border); top: 63px;"
+    class="w-300 text-amber-200"
+    style="background: var(--card); border-left: 1px solid var(--border); top: 63px; color: white;"
   >
-    <app-user-sidenav
-      [user]="ui.selectedUser()"
-      (close)="ui.close()"
-    />
+    @if (ui.component(); as component) {
+      <ng-container
+        *ngComponentOutlet="component; injector: ui.injector()"
+      ></ng-container>
+    }
   </mat-sidenav>
 
   <!-- CONTENIDO PRINCIPAL -->

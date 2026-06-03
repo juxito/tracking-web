@@ -1,23 +1,36 @@
-import { Injectable, signal } from '@angular/core';
-import { User } from '../../models/user.model';
+import { Injectable, signal, Type, Injector, inject } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class UiService {
 
-  sidenavOpen = signal(false);
-  selectedUser = signal<User | null>(null);
+  private _open = signal(false);
+  private _component = signal<Type<any> | null>(null);
+  private _data = signal<any>(null);
+  private _injector = signal<Injector | undefined>(undefined); // ✅ NUEVO
 
-  openCreate() {
-    this.selectedUser.set(null);
-    this.sidenavOpen.set(true);
-  }
+  sidenavOpen = this._open.asReadonly();
+  component = this._component.asReadonly();
+  injector = this._injector.asReadonly();
 
-  openEdit(user: User) {
-    this.selectedUser.set(user);
-    this.sidenavOpen.set(true);
+  private parentInjector = inject(Injector);
+
+  open(component: Type<any>, data?: any) {
+    this._component.set(component);
+    this._data.set(data);
+
+    // ✅ CREAR UNA SOLA VEZ
+    const injector = Injector.create({
+      providers: [
+        { provide: 'SIDENAV_DATA', useValue: data }
+      ],
+      parent: this.parentInjector
+    });
+
+    this._injector.set(injector);
+    this._open.set(true);
   }
 
   close() {
-    this.sidenavOpen.set(false);
+    this._open.set(false);
   }
 }

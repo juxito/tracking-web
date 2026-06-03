@@ -29,16 +29,6 @@ export class UsersComponent implements OnInit {
     this.users$ = this.store.users$;
   }
 
-  // ngAfterViewInit() {
-  //   effect(() => {
-  //     if (this.ui.sidenavOpen()) {
-  //       this.sidenav.open();
-  //     } else {
-  //       this.sidenav.close();
-  //     }
-  //   });
-  // }
-  
   ngOnInit() {
     this.store.loadUsers();
   }
@@ -51,22 +41,17 @@ export class UsersComponent implements OnInit {
     this.selectedUser = null;
 
     console.log('CLICK');
-    // console.log(this.sidenav);
-    // this.sidenavOpen = true;
-    // this.sidenav.open();
-    this.ui.openCreate();
+    this.ui.open(UserSidenavComponent, null);
   }
 
   openEdit(user: User) {
+    console.log('user: ', user);
+    
     this.selectedUser = user;
-    // this.sidenavOpen = true;
-    // this.sidenav.open();
-    this.ui.openEdit(user);
+    this.ui.open(UserSidenavComponent, user);
   }
 
   closeSidenav() {
-    // this.sidenavOpen = false;
-    // this.sidenav.close();
     this.ui.close();
   }
 }

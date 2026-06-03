@@ -14,7 +14,8 @@
 
   <!-- ACTION -->
   <div class="flex justify-end gap-2">
-    <button (click)="close.emit()">Cancelar</button>
+    <!-- 🔥 YA NO usamos EventEmitter -->
+    <button (click)="cancel()">Cancelar</button>
 
     <button class="btn-primary" (click)="save()">Guardar Cambios</button>
   </div>

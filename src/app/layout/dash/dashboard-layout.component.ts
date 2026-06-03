@@ -20,7 +20,7 @@ import { UiService } from '../../core/services/ui.service';
     TopbarComponent,
     FootbarComponent,
     MatSidenavModule,
-    UserSidenavComponent
+    // UserSidenavComponent
   ],
   templateUrl: './dashboard-layout.component.html'
 })

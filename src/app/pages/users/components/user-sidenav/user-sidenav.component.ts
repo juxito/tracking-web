@@ -1,8 +1,9 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { UsersStore } from '../../services/users.store';
+import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { UsersStore } from '../../services/users.store';
 import { User } from '../../../../models/user.model';
+import { UiService } from '../../../../core/services/ui.service';
 
 @Component({
   selector: 'app-user-sidenav',
@@ -12,16 +13,14 @@ import { User } from '../../../../models/user.model';
 })
 export class UserSidenavComponent {
 
-  @Input() open = false;
-  @Input() user: User | null = null;
+  model: User;
 
-  @Output() close = new EventEmitter();
-
-  model: User = this.emptyUser();
-
-  constructor(private store: UsersStore) {}
-
-  ngOnChanges() {
+  constructor(
+    @Inject('SIDENAV_DATA') public user: User | null,
+    private store: UsersStore,
+    private ui: UiService // 🔥 control global del sidenav
+  ) {
+    // 🔥 IMPORTANTE: inicializar aquí (NO en ngOnChanges)
     this.model = this.user ? { ...this.user } : this.emptyUser();
   }
 
@@ -41,6 +40,11 @@ export class UserSidenavComponent {
     } else {
       this.store.addUser(this.model);
     }
-    this.close.emit();
+
+    this.ui.close(); // 🔥 cerrar sidenav global
+  }
+
+  cancel() {
+    this.ui.close(); // 🔥 cerrar sidenav global
   }
 }
