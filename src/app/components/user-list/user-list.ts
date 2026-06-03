@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../services/user'; // Ajusta la ruta a tu servicio real
+import { UsersService } from '../../services/users/users.service'; // Ajusta la ruta a tu servicio real
 import { MatTableModule } from '@angular/material/table'; // 👈 IMPORTANTE: Importa la tabla de Material
 
 @Component({
@@ -18,11 +18,11 @@ export class UserListComponent implements OnInit {
   // Definimos el orden y cuáles columnas queremos renderizar en la vista
   displayedColumns: string[] = ['id', 'name', 'email', 'role'];
 
-  constructor(private userService: UserService) {}
+  constructor(private usersService: UsersService) {}
 
   ngOnInit(): void {
     // Aquí llamas a tu servicio para llenar la variable 'users'
-    this.userService.getUsers().subscribe({
+    this.usersService.getUsers().subscribe({
       next: (data) => {
         this.users = data;
       },

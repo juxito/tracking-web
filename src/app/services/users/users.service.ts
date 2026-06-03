@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from '../models/user.model';
+import { User } from '../../models/user.model';
 
 // Interfaz para definir la estructura del objeto (tipado estricto)
 // export interface User {
@@ -14,7 +14,7 @@ import { User } from '../models/user.model';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UsersService {
   private apiUrl = 'http://localhost:8080/api/users'; // URL del Backend
 
   constructor(private http: HttpClient) { }
@@ -27,6 +27,13 @@ export class UserService {
   // Guardar usuario
   createUser(user: User): Observable<User> {
     return this.http.post<User>(this.apiUrl, user);
+  }
+
+  updateUser(user: User) {
+    // const updated = this.usersSubject.value.map(u =>
+    //   u.id === user.id ? user : u
+    // );
+    // this.usersSubject.next(updated);
   }
 
   // Eliminar usuario

@@ -24,10 +24,14 @@
     </div>
   </div>
 
+  @if (store.loading()) {
+    <p>Cargando...</p>
+  }
+
   <!-- CARDS -->
   @if (viewMode === 'cards') {
     <div class="grid grid-cols-3 gap-6">
-      @for (user of (users$ | async) ?? []; track user.id) {
+      @for (user of users(); track user.id) {
         <div class="card cursor-pointer" (click)="openEdit(user)">
           <!-- HEADER -->
           <div class="flex items-center gap-3 mb-4">
@@ -80,7 +84,7 @@
         </thead>
 
         <tbody>
-          @for (user of users$ | async; track user.id) {
+          @for (user of users(); track user.id) {
             <tr class="border-t border-(--border) cursor-pointer" (click)="openEdit(user)">
               <td class="p-3">{{ user.name }}</td>
               <td>{{ user.email }}</td>

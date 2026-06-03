@@ -1,33 +1,40 @@
-import { Component, effect, OnInit, ViewChild } from '@angular/core';
+import { Component, effect, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs/internal/Observable';
 import { MatSidenavModule, MatSidenav } from '@angular/material/sidenav';
 
-import { UsersStore } from './services/users.store';
-import { UserSidenavComponent } from "./components/user-sidenav/user-sidenav.component";
+// import { UsersStore } from '../../services/users/users.store';
+import { UsersStore } from '../../services/users/users.store';
+import { UserSidenavComponent } from './components/user-sidenav/user-sidenav.component';
 import { UiService } from '../../core/services/ui.service';
-import { User } from '../../services/user';
+import { User } from '../../services/users/users.service';
 
 @Component({
   standalone: true,
   imports: [CommonModule, MatSidenavModule],
-  templateUrl: './users.component.html'
+  templateUrl: './users.component.html',
 })
 export class UsersComponent implements OnInit {
-
   @ViewChild('globalSidenav') sidenav!: MatSidenav;
 
+  public store = inject(UsersStore);   // ← se resuelve antes que las props
+  public ui = inject(UiService);
+
   // users$!: any;
-  users$!: Observable<User[]>;
+  // users$!: Observable<User[]>;
+  users = this.store.users; // 👈 señal reactiva
   
   viewMode: 'cards' | 'table' = 'cards';
   
   sidenavOpen = false;
   selectedUser: User | null = null;
-  
-  constructor(private store: UsersStore, public ui: UiService) {
-    this.users$ = this.store.users$;
-  }
+
+  // constructor(
+  //   private store: UsersStore,
+  //   public ui: UiService,
+  // ) {
+  //   // this.users$ = this.store.users$;
+  // }
 
   ngOnInit() {
     this.store.loadUsers();
@@ -46,7 +53,7 @@ export class UsersComponent implements OnInit {
 
   openEdit(user: User) {
     console.log('user: ', user);
-    
+
     this.selectedUser = user;
     this.ui.open(UserSidenavComponent, user);
   }
