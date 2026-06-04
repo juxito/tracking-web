@@ -50,12 +50,18 @@ export class UsersStore {
     });
   }
 
+  // diferencia entre un observable y un Signal
   addUser(user: User) {
     this.api.createUser(user).subscribe({
       next: (newUser) => {
         this._users.update((users) => [...users, newUser]);
+        this._error.set(null); // limpiar error si fue exitoso
       },
-      error: () => this._error.set('Error creando usuario'),
+      error: (err) => {
+        // 🔥 ahora sí usamos el mensaje real
+        console.log('Error al crear usuario: ', err);
+        this._error.set(err.message);
+      },
     });
   }
 

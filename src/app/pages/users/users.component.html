@@ -24,8 +24,18 @@
     </div>
   </div>
 
+  <!-- LOADING -->
   @if (store.loading()) {
-    <p>Cargando...</p>
+    <div class="p-4 text-blue-500">
+      Cargando usuarios...
+    </div>
+  }
+
+  <!-- ERROR GLOBAL DEL MODULO USERS -->
+  @if (store.error()) {
+    <div class="p-4 text-red-500 bg-red-100 rounded mb-4">
+      {{ store.error() }}
+    </div>
   }
 
   <!-- CARDS -->

@@ -9,6 +9,8 @@ import { TopbarComponent } from '../../components/shared/topbar/topbar.component
 import { FootbarComponent } from '../../components/shared/footbar/footbar.component';
 import { UserSidenavComponent } from '../../pages/users/components/user-sidenav/user-sidenav.component';
 import { UiService } from '../../core/services/ui.service';
+import { ErrorService } from '../../core/services/error.service';
+import { LoadingService } from '../../core/services/loading.service';
 
 @Component({
   selector: 'app-dashboard-layout',
@@ -22,12 +24,16 @@ import { UiService } from '../../core/services/ui.service';
     MatSidenavModule,
     // UserSidenavComponent
   ],
-  templateUrl: './dashboard-layout.component.html'
+  templateUrl: './dashboard-layout.component.html',
 })
 export class DashboardLayoutComponent {
   sidebarCollapsed = false;
 
-  constructor(public ui: UiService) {}
+  constructor(
+    public ui: UiService,
+    public loading: LoadingService,
+    public error: ErrorService,
+  ) {}
 
   toggleSidebar() {
     this.sidebarCollapsed = !this.sidebarCollapsed;

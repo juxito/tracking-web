@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { User } from '../../models/user.model';
 
 // Interfaz para definir la estructura del objeto (tipado estricto)
@@ -12,12 +12,12 @@ import { User } from '../../models/user.model';
 // }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsersService {
   private apiUrl = 'http://localhost:8080/api/users'; // URL del Backend
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   // Obtener usuarios
   getUsers(): Observable<User[]> {
@@ -26,7 +26,22 @@ export class UsersService {
 
   // Guardar usuario
   createUser(user: User): Observable<User> {
-    return this.http.post<User>(this.apiUrl, user);
+    return this.http.post<User>(this.apiUrl, user).pipe(
+      catchError((err) => {
+        let message = 'Error desconocido';
+
+        // 🔥 parseo del error backend
+        if (err.error?.message?.includes('password')) {
+          message = 'La contraseña es obligatoria';
+        }
+
+        if (err.status === 400) {
+          message = 'Datos inválidos';
+        }
+
+        return throwError(() => new Error(message));
+      }),
+    );
   }
 
   updateUser(user: User) {
@@ -43,5 +58,5 @@ export class UsersService {
 }
 
 export type {
-  User // URL del Backend
+  User, // URL del Backend
 };
