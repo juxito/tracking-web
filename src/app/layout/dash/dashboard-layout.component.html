@@ -1,5 +1,6 @@
-<mat-sidenav-container class="layout-container h-full">
+<app-global-loader />
 
+<mat-sidenav-container class="layout-container h-full">
   <!-- SIDENAV DERECHO GLOBAL -->
   <mat-sidenav
     position="end"
@@ -7,19 +8,23 @@
     [opened]="ui.sidenavOpen()"
     (closed)="ui.close()"
     class="w-300 text-amber-200"
-    style="background: var(--card); border-left: 1px solid var(--border); top: 63px; color: white;"
+    style="background: var(--card); border-left: 1px solid var(--border); top: 63px; color: white"
   >
     @if (ui.component(); as component) {
-      <ng-container
-        *ngComponentOutlet="component; injector: ui.injector()"
-      ></ng-container>
+      <ng-container *ngComponentOutlet="component; injector: ui.injector()"></ng-container>
     }
   </mat-sidenav>
 
   <!-- 🔥 LOADING GLOBAL -->
-  @if (loading.loading() > 0) {
+  <!-- @if (loading.loading() > 0) {
     <div class="fixed top-0 left-0 w-full h-1 bg-blue-500 animate-pulse z-50"></div>
-  }
+    <div class="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
+      <div class="bg-white p-6 rounded shadow-lg flex items-center gap-3">
+        <div class="animate-spin w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full"></div>
+        <span>Cargando...</span>
+      </div>
+    </div>
+  } -->
 
   <!-- 🔥 ERROR GLOBAL -->
   @if (error.error()) {
@@ -30,15 +35,9 @@
 
   <!-- CONTENIDO PRINCIPAL -->
   <mat-sidenav-content class="bg-(--background) text-amber-50">
+    <app-sidebar [collapsed]="sidebarCollapsed" (toggle)="toggleSidebar()"></app-sidebar>
 
-    <app-sidebar
-      [collapsed]="sidebarCollapsed"
-      (toggle)="toggleSidebar()"
-    ></app-sidebar>
-
-    <app-topbar
-      [collapsed]="sidebarCollapsed"
-    ></app-topbar>
+    <app-topbar [collapsed]="sidebarCollapsed"></app-topbar>
 
     <main
       class="pt-16 pb-16 transition-all duration-300"
@@ -49,10 +48,6 @@
       </div>
     </main>
 
-    <app-footbar
-      [collapsed]="sidebarCollapsed"
-    ></app-footbar>
-
+    <app-footbar [collapsed]="sidebarCollapsed"></app-footbar>
   </mat-sidenav-content>
-
 </mat-sidenav-container>

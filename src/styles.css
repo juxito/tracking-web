@@ -116,3 +116,31 @@ body {
   background: var(--card);
   color: var(--foreground);
 }
+
+/* 🎨 SNACKBAR */
+/* SUCCESS */
+.snackbar-success .mat-mdc-snack-bar-container {
+  background: #16a34a !important;
+  color: white;
+}
+
+/* ERROR */
+.snackbar-error.mat-mdc-snack-bar-container .mat-mdc-snackbar-surface {
+  background-color: #dc2626 !important;
+  color: white;
+}
+.snackbar-error.mat-mdc-snack-bar-container .mat-mdc-snackbar-surface button{
+  color: white !important;
+}
+
+/* WARNING */
+.snackbar-warning {
+  background: #f59e0b !important;
+  color: black;
+}
+
+/* INFO */
+.snackbar-info {
+  background: #2563eb !important;
+  color: white;
+}

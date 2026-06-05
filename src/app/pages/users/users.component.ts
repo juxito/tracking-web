@@ -8,6 +8,7 @@ import { UsersStore } from '../../services/users/users.store';
 import { UserSidenavComponent } from './components/user-sidenav/user-sidenav.component';
 import { UiService } from '../../core/services/ui.service';
 import { User } from '../../services/users/users.service';
+import { RetryService } from '../../core/services/retry.service';
 
 @Component({
   standalone: true,
@@ -19,13 +20,13 @@ export class UsersComponent implements OnInit {
 
   public store = inject(UsersStore);   // ← se resuelve antes que las props
   public ui = inject(UiService);
+  public retryService = inject(RetryService); 
 
   // users$!: any;
   // users$!: Observable<User[]>;
   users = this.store.users; // 👈 señal reactiva
   
   viewMode: 'cards' | 'table' = 'cards';
-  
   sidenavOpen = false;
   selectedUser: User | null = null;
 

@@ -25,9 +25,134 @@
   </div>
 
   <!-- LOADING -->
-  @if (store.loading()) {
+  <!-- @if (store.loading()) {
     <div class="p-4 text-blue-500">
       Cargando usuarios...
+    </div>
+  } -->
+  @if (!store.loading()) {
+    <!-- CARDS -->
+    @if (viewMode === 'cards') {
+      <div class="grid grid-cols-3 gap-6">
+        @for (user of users(); track user.id) {
+          <div class="card cursor-pointer" (click)="openEdit(user)">
+            <!-- HEADER -->
+            <div class="flex items-center gap-3 mb-4">
+              <!-- AVATAR -->
+              <div
+                class="w-10 h-10 rounded-full flex items-center justify-center"
+                style="background: var(--primary); color: white"
+              >
+                {{ user.name[0] }}
+              </div>
+
+              <div>
+                <h3 class="font-semibold">{{ user.name }}</h3>
+                <span class="text-xs px-2 py-1 rounded-full" style="background: var(--muted)">
+                  {{ user.role }}
+                </span>
+              </div>
+            </div>
+
+            <!-- INFO -->
+            <div class="text-sm text-(--muted-foreground) space-y-1">
+              <p>{{ user.email }}</p>
+              <p>Último acceso: --</p>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="flex justify-between items-center mt-4">
+              <span class="text-xs" [style.color]="user.status === 'activo' ? '#00c853' : '#aaa'">
+                ● {{ user.status }}
+              </span>
+
+              <!-- <div class="flex gap-2 opacity-70">✏️ 🗑️</div> -->
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- TABLE -->
+    @if (viewMode === 'table') {
+      <div class="card">
+        <table class="w-full text-sm">
+          <thead class="text-left text-(--muted-foreground)">
+            <tr>
+              <th class="p-3">Nombre</th>
+              <th>Email</th>
+              <th>Rol</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (user of users(); track user.id) {
+              <tr class="border-t border-(--border) cursor-pointer" (click)="openEdit(user)">
+                <td class="p-3">{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role }}</td>
+                <td>{{ user.status }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  } @else {
+    <!-- BANNER RETRY — encima del skeleton -->
+    @if (retryService.state().retrying) {
+      <div
+        class="flex items-center gap-3 p-4 mb-4 rounded-lg border"
+        style="background: var(--warning-bg, #fff8e1); border-color: #f9a825"
+      >
+        <!-- spinner -->
+        <svg class="animate-spin w-5 h-5 text-yellow-600" fill="none" viewBox="0 0 24 24">
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          />
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+        </svg>
+
+        <span class="text-sm text-yellow-800">
+          Reintento #{{ retryService.state().attempt }} — volviendo a intentar en
+          <strong>{{ retryService.state().secondsLeft }}s</strong>...
+        </span>
+      </div>
+    }
+
+    <!-- skeleton -->
+    <div class="grid grid-cols-3 gap-6">
+      @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+        <div class="card animate-pulse">
+          <!-- HEADER -->
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-full bg-gray-300"></div>
+
+            <div class="flex flex-col gap-2">
+              <div class="h-4 w-24 bg-gray-300 rounded"></div>
+              <div class="h-3 w-16 bg-gray-200 rounded"></div>
+            </div>
+          </div>
+
+          <!-- INFO -->
+          <div class="space-y-2">
+            <div class="h-3 bg-gray-200 rounded w-full"></div>
+            <div class="h-3 bg-gray-200 rounded w-3/4"></div>
+          </div>
+
+          <!-- FOOTER -->
+          <div class="flex justify-between items-center mt-4">
+            <div class="h-3 w-12 bg-gray-200 rounded"></div>
+            <div class="h-3 w-6 bg-gray-200 rounded"></div>
+          </div>
+        </div>
+      }
     </div>
   }
 
@@ -37,75 +162,4 @@
       {{ store.error() }}
     </div>
   }
-
-  <!-- CARDS -->
-  @if (viewMode === 'cards') {
-    <div class="grid grid-cols-3 gap-6">
-      @for (user of users(); track user.id) {
-        <div class="card cursor-pointer" (click)="openEdit(user)">
-          <!-- HEADER -->
-          <div class="flex items-center gap-3 mb-4">
-            <!-- AVATAR -->
-            <div
-              class="w-10 h-10 rounded-full flex items-center justify-center"
-              style="background: var(--primary); color: white"
-            >
-              {{ user.name[0] }}
-            </div>
-
-            <div>
-              <h3 class="font-semibold">{{ user.name }}</h3>
-              <span class="text-xs px-2 py-1 rounded-full" style="background: var(--muted)">
-                {{ user.role }}
-              </span>
-            </div>
-          </div>
-
-          <!-- INFO -->
-          <div class="text-sm text-(--muted-foreground) space-y-1">
-            <p>{{ user.email }}</p>
-            <p>Último acceso: --</p>
-          </div>
-
-          <!-- FOOTER -->
-          <div class="flex justify-between items-center mt-4">
-            <span class="text-xs" [style.color]="user.status === 'activo' ? '#00c853' : '#aaa'">
-              ● {{ user.status }}
-            </span>
-
-            <!-- <div class="flex gap-2 opacity-70">✏️ 🗑️</div> -->
-          </div>
-        </div>
-      }
-    </div>
-  }
-
-  <!-- TABLE -->
-  @if (viewMode === 'table') {
-    <div class="card">
-      <table class="w-full text-sm">
-        <thead class="text-left text-(--muted-foreground)">
-          <tr>
-            <th class="p-3">Nombre</th>
-            <th>Email</th>
-            <th>Rol</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          @for (user of users(); track user.id) {
-            <tr class="border-t border-(--border) cursor-pointer" (click)="openEdit(user)">
-              <td class="p-3">{{ user.name }}</td>
-              <td>{{ user.email }}</td>
-              <td>{{ user.role }}</td>
-              <td>{{ user.status }}</td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-  }
-
-
 </div>

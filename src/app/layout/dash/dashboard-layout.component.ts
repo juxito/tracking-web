@@ -11,6 +11,7 @@ import { UserSidenavComponent } from '../../pages/users/components/user-sidenav/
 import { UiService } from '../../core/services/ui.service';
 import { ErrorService } from '../../core/services/error.service';
 import { LoadingService } from '../../core/services/loading.service';
+import { GlobalLoaderComponent } from '../../components/shared/loader.component';
 
 @Component({
   selector: 'app-dashboard-layout',
@@ -22,6 +23,7 @@ import { LoadingService } from '../../core/services/loading.service';
     TopbarComponent,
     FootbarComponent,
     MatSidenavModule,
+    GlobalLoaderComponent
     // UserSidenavComponent
   ],
   templateUrl: './dashboard-layout.component.html',
