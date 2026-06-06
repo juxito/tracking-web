@@ -25,7 +25,7 @@ export class UserSidenavComponent {
     name: FormControl<string>;
     email: FormControl<string>;
     role: FormControl<string>;
-    status: FormControl<string>;
+    // status: FormControl<string>;
   }>;
 
   constructor(
@@ -41,8 +41,8 @@ export class UserSidenavComponent {
     this.form = this.fb.nonNullable.group({
       name: ['', Validators.required], // obligatorio
       email: ['', [Validators.required, Validators.email]], // email válido
-      role: ['Operador', Validators.required],
-      status: ['activo'],
+      role: ['Operador', Validators.required]
+      // status: ['activo'],
     });
 
     if (user) {
@@ -56,7 +56,7 @@ export class UserSidenavComponent {
       name: '',
       email: '',
       role: 'Operador',
-      status: 'activo',
+      status: 1,
     };
   }
 

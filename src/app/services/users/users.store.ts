@@ -41,6 +41,7 @@ export class UsersStore {
 
     this.api.getUsers().subscribe({
       next: (data) => {
+        console.log('DATA:', data, Array.isArray(data));
         this._users.set(data);
         this._loading.set(false);
       },

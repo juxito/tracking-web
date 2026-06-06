@@ -23,7 +23,7 @@ import { GlobalLoaderComponent } from '../../components/shared/loader.component'
     TopbarComponent,
     FootbarComponent,
     MatSidenavModule,
-    GlobalLoaderComponent
+    // GlobalLoaderComponent
     // UserSidenavComponent
   ],
   templateUrl: './dashboard-layout.component.html',

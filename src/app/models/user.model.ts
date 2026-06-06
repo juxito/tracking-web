@@ -9,7 +9,7 @@ export interface User {
   email: string;
 
   role: string;
-  status: string;
+  status: number;
 
   // opcionales (pero recomendados para escalar)
   lastAccess?: string; // ISO string
