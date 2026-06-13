@@ -15,7 +15,8 @@ import { User } from '../../models/user.model';
   providedIn: 'root',
 })
 export class UsersService {
-  private apiUrl = 'http://localhost:8080/api/users'; // URL del Backend
+  // private apiUrl = 'http://localhost:8080/api/users'; // URL del Backend
+  private apiUrl = 'https://tracking-api-3vlf.onrender.com/api/users'; // URL del Backend
 
   constructor(private http: HttpClient) {}
 
